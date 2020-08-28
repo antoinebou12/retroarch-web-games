@@ -27,7 +27,7 @@ ENV ROOT_WWW_PATH /var/www/html
 RUN cd ${ROOT_WWW_PATH} \
 	&& wget https://buildbot.libretro.com/nightly/emscripten/$(date -d "yesterday" '+%Y-%m-%d')_RetroArch.7z \
 	&& 7z e -y $(date -d "yesterday" '+%Y-%m-%d')_RetroArch.7z \
-	&& sed -i '/<script src="analytics.js"><\/script>/d' ./index.html \
+	&& sed -i 's/<script src="analytics.js"><\/script>/<script>document.querySelector('div[align="center"]').style.display = "none"<\/script>/g' ./index.html \
 	&& cp canvas.png media/canvas.png \
 	&& chmod +x indexer \
 	&& mkdir -p ${ROOT_WWW_PATH}/assets/frontend \
