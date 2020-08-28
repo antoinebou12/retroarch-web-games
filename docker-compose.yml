@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+    retroarch-web:
+        image: inglebard/retroarch-web
+        container_name: retroarch
+        volumes:
+            - '~/retroarch:/var/www/html/assets/cores'
+        ports:
+            - '8080:80'
+        
