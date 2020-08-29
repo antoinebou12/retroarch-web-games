@@ -39,16 +39,16 @@ RUN cd ${ROOT_WWW_PATH} \
 	&& cd ${ROOT_WWW_PATH}/assets/frontend/bundle \
 	&& ../../../indexer > .index-xhr \
 	&& cd ${ROOT_WWW_PATH}/assets/cores \
+	&& mkdir ${ROOT_WWW_PATH}/assets/cores/NES && wget -m -np -c -U "/var/www/html/assets/cores/NES/eye01" -R "index.html*" "https://the-eye.eu/public/rom/NES/" \
+	&& mkdir ${ROOT_WWW_PATH}/assets/cores/SNES && wget -m -np -c -U "/var/www/html/assets/cores/SNES/eye01" -R "index.html*" "https://the-eye.eu/public/rom/SNES/"  \
+	&& mkdir ${ROOT_WWW_PATH}/assets/cores/GB && wget -m -np -c -U "/var/www/html/assets/cores/GB/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Nintendo%20Gameboy/"  \
+	&& mkdir ${ROOT_WWW_PATH}/assets/cores/GBA && wget -m -np -c -U "/var/www/html/assets/cores/GBA/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Nintendo%20Gameboy%20Advance/" \
+	&& mkdir ${ROOT_WWW_PATH}/assets/cores/GBC && wget -m -np -c -U "/var/www/html/assets/cores/GBC/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Nintendo%20Gameboy%20Color/"  \
+	&& mkdir ${ROOT_WWW_PATH}/assets/cores/SegaGenesis && wget -m -np -c -U "/var/www/html/assets/cores/SegaGenesis/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Sega%20Genesis/" \
+	&& mkdir ${ROOT_WWW_PATH}/assets/cores/Thomson \
  	&& ../../indexer > .index-xhr \
 	&& rm -rf ${ROOT_WWW_PATH}/RetroArch.7z \
-	&& rm -rf ${ROOT_WWW_PATH}/assets/frontend/bundle.zip \
-	&& mkdir  ${ROOT_WWW_PATH}/assets/cores/NES && wget -m -np -c -U "/var/www/html/assets/cores/NES/eye01" -R "index.html*" "https://the-eye.eu/public/rom/NES/" \
-	&& mkdir  ${ROOT_WWW_PATH}/assets/cores/SNES && wget -m -np -c -U "/var/www/html/assets/cores/SNES/eye01" -R "index.html*" "https://the-eye.eu/public/rom/SNES/"  \
-	&& mkdir  ${ROOT_WWW_PATH}/assets/cores/GB && wget -m -np -c -U "/var/www/html/assets/cores/GB/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Nintendo%20Gameboy/"  \
-	&& mkdir  ${ROOT_WWW_PATH}/assets/cores/GBA && wget -m -np -c -U "/var/www/html/assets/cores/GBA/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Nintendo%20Gameboy%20Advance/" \
-	&& mkdir  ${ROOT_WWW_PATH}/assets/cores/GBC && wget -m -np -c -U "/var/www/html/assets/cores/GBC/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Nintendo%20Gameboy%20Color/"  \
-	&& mkdir  ${ROOT_WWW_PATH}/assets/cores/SegaGenesis && wget -m -np -c -U "/var/www/html/assets/cores/SegaGenesis/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Sega%20Genesis/"\
-	&& mkdir  ${ROOT_WWW_PATH}/assets/cores/Thomson
+	&& rm -rf ${ROOT_WWW_PATH}/assets/frontend/bundle.zip 
 
 WORKDIR ${ROOT_WWW_PATH}
 
