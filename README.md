@@ -1,13 +1,21 @@
 # docker-retroarch-web
 Self-hosted archretro web player. Github Dockerhub
 
+With all games for
+
+- nes
+- snes
+- genesis
+- gameboy
+
 How to use this image :
 You can run this image like this:
 
 ```
-docker run --rm -it -p 8080:80 inglebard/retroarch-web-nightly
-```
+docker-compose up -d
 
+```
+Image size ~30GB
 Thanks
 This image was created from
 
