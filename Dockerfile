@@ -34,6 +34,7 @@ RUN cd ${ROOT_WWW_PATH} \
 	&& chmod +x indexer \
 	&& mkdir -p ${ROOT_WWW_PATH}/assets/frontend \
 	&& mkdir -p ${ROOT_WWW_PATH}/assets/cores \
+	&& mkdir -p ${ROOT_WWW_PATH}/assets/cores/retroarch \
 	&& cd ${ROOT_WWW_PATH}/assets/frontend \
 	&& wget https://buildbot.libretro.com/assets/frontend/bundle.zip \
 	&& unzip bundle.zip -d bundle \
@@ -49,6 +50,14 @@ RUN cd ${ROOT_WWW_PATH} \
  	&& ../../indexer > .index-xhr \
 	&& rm -rf ${ROOT_WWW_PATH}/RetroArch.7z \
 	&& rm -rf ${ROOT_WWW_PATH}/assets/frontend/bundle.zip 
+	
+COPY sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom
+RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NES/ \
+    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SNES/ \
+    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo GameBoy/' \
+    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo GameBoy Advance/' \
+    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo GameBoy Color/' \
+    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo Sega Genesis/'
 
 WORKDIR ${ROOT_WWW_PATH}
 
