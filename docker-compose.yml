@@ -6,8 +6,5 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: retroarch
-        volumes:
-            - '~/retroarch:/var/www/html/assets/cores/'
         ports:
             - '8080:80'
-        
