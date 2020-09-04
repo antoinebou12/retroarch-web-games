@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
 	xz-utils \
 	nginx \
 	wget \
+	vim \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
