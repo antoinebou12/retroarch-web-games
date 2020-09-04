@@ -57,7 +57,7 @@ RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh ${ROO
     && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo GameBoy/' \
     && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo GameBoy Advance/' \
     && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo GameBoy Color/' \
-    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo Sega Genesis/'
+    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom sort_mkdir.sh '${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Sega Genesis/'
 
 WORKDIR ${ROOT_WWW_PATH}
 
