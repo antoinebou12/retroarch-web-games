@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 for letter in {0..9} {a..z};
 do
         files_array=()
