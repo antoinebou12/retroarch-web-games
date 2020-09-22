@@ -13,8 +13,8 @@ You can run this image like this:
 
 ```
 docker-compose up -d
-
 ```
+
 Image size ~30GB
 Thanks
 This image was created from

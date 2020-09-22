@@ -24,13 +24,10 @@ RUN apt-get update && apt-get install -y \
 
 ENV ROOT_WWW_PATH /var/www/html
 
-
 RUN cd ${ROOT_WWW_PATH} \
 	&& wget https://buildbot.libretro.com/nightly/emscripten/$(date -d "yesterday" '+%Y-%m-%d')_RetroArch.7z \
 	&& 7z e -y $(date -d "yesterday" '+%Y-%m-%d')_RetroArch.7z \
-	&& sed -i 's/<script src="analytics.js"><\/script>/<style>body{background-color:black;<\/style>/g' ./index.html \
-	&& sed -i 's/<\/body>/<script>document.querySelector("div[align=center]").style.display = "none"<\/script><\/body>/g' ./index.html \
-	&& cp canvas.png media/canvas.png \
+    && cp canvas.png media/canvas.png \
 	&& chmod +x indexer \
 	&& mkdir -p ${ROOT_WWW_PATH}/assets/frontend \
 	&& mkdir -p ${ROOT_WWW_PATH}/assets/cores \
@@ -55,7 +52,7 @@ COPY sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/
 RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboy \
    && mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy\ Advance/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyAdvance \
    && mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy\ Color/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyColor \
-   && mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Sega\ Genesis/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SegaGenesis \ 
+   && mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Sega\ Genesis/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SegaGenesis \
    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NES/ \
    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SNES/ \
    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboy/ \
@@ -63,6 +60,11 @@ RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy/ ${
    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyColor/ \
    && bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SegaGenesis/ \
    && cd ${ROOT_WWW_PATH}/assets/cores \
+   && ../../indexer > .index-xhr
+
+COPY index.html ${ROOT_WWW_PATH}/index.html
+
+RUN cd ${ROOT_WWW_PATH}/assets/cores \
    && ../../indexer > .index-xhr
 
 WORKDIR ${ROOT_WWW_PATH}
