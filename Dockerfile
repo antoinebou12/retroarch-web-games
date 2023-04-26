@@ -2,7 +2,7 @@
 #
 # docker run --rm -it -p 8080:80 retroarch-web-nightly
 #
-FROM debian:buster
+FROM debian:bullseye
 
 LABEL maintainer "Antoine Boucher <antoine.bou13@gmail.com>"
 
