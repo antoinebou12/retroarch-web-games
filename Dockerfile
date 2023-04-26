@@ -48,18 +48,18 @@ RUN ../../indexer > .index-xhr
 RUN rm -rf ${ROOT_WWW_PATH}/RetroArch.7z 
 RUN rm -rf ${ROOT_WWW_PATH}/assets/frontend/assets.zip
 	
-COPY sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/
-RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboy 
-RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy\ Advance/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyAdvance 
-RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy\ Color/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyColor 
-RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Sega\ Genesis/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SegaGenesis 
-RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NES/ 
-RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SNES/ 
-RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboy/ 
-RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyAdvance/ 
-RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyColor/ 
-RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SegaGenesis/ 
-RUN cd ${ROOT_WWW_PATH}/assets/cores 
+# COPY sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/
+# RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboy 
+# RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy\ Advance/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyAdvance 
+# RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy\ Color/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyColor 
+# RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Sega\ Genesis/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SegaGenesis 
+# RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NES/ 
+# RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SNES/ 
+# RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboy/ 
+# RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyAdvance/ 
+# RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboyColor/ 
+# RUN bash ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/SegaGenesis/ 
+# RUN cd ${ROOT_WWW_PATH}/assets/cores 
 RUN ../../indexer > .index-xhr
 
 COPY index.html ${ROOT_WWW_PATH}/index.html
