@@ -34,7 +34,7 @@ RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores
 RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores/retroarch 
 RUN cd ${ROOT_WWW_PATH}/assets/frontend 
 RUN wget https://buildbot.libretro.com/assets/frontend/assets.zip
-RUN unzip bundle.zip -d bundle 
+RUN unzip assets.zip -d bundle 
 RUN cd ${ROOT_WWW_PATH}/assets/frontend/bundle 
 RUN ../../../indexer > .index-xhr 
 RUN cd ${ROOT_WWW_PATH}/assets/cores 
@@ -46,7 +46,7 @@ RUN wget -m -np -c -U "/var/www/html/assets/cores/GBC/eye01" -R "index.html*" "h
 RUN wget -m -np -c -U "/var/www/html/assets/cores/SegaGenesis/eye01" -R "index.html*" "https://the-eye.eu/public/rom/Sega%20Genesis/" 
 RUN ../../indexer > .index-xhr 
 RUN rm -rf ${ROOT_WWW_PATH}/RetroArch.7z 
-RUN rm -rf ${ROOT_WWW_PATH}/assets/frontend/bundle.zip 
+RUN rm -rf ${ROOT_WWW_PATH}/assets/frontend/assets.zip
 	
 COPY sort_mkdir.sh ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/
 RUN mv ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/Nintendo\ Gameboy/ ${ROOT_WWW_PATH}/assets/cores/the-eye.eu/public/rom/NintendoGameboy 
