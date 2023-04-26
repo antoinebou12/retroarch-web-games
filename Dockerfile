@@ -33,7 +33,7 @@ RUN mkdir -p ${ROOT_WWW_PATH}/assets/frontend
 RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores 
 RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores/retroarch 
 RUN cd ${ROOT_WWW_PATH}/assets/frontend 
-RUN wget https://buildbot.libretro.com/assets/frontend/bundle.zip 
+RUN wget https://buildbot.libretro.com/assets/frontend/assets.zip
 RUN unzip bundle.zip -d bundle 
 RUN cd ${ROOT_WWW_PATH}/assets/frontend/bundle 
 RUN ../../../indexer > .index-xhr 
