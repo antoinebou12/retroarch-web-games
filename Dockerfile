@@ -35,7 +35,7 @@ RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores/retroarch
 RUN cd ${ROOT_WWW_PATH}/assets/frontend 
 RUN wget https://buildbot.libretro.com/assets/frontend/assets.zip
 RUN unzip assets.zip -d bundle 
-RUN cd ${ROOT_WWW_PATH}/assets/frontend/bundle 
+RUN cd bundle
 RUN ../../../indexer > .index-xhr 
 RUN cd ${ROOT_WWW_PATH}/assets/cores 
 RUN wget -m -np -c -U "/var/www/html/assets/cores/NES/eye01" -R "index.html*" "https://the-eye.eu/public/rom/NES/"  
