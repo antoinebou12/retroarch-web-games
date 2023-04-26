@@ -64,8 +64,8 @@ RUN ../../indexer > .index-xhr
 
 COPY index.html ${ROOT_WWW_PATH}/index.html
 
-RUN cd ${ROOT_WWW_PATH}/assets/cores \
-   && ../../indexer > .index-xhr
+# RUN cd ${ROOT_WWW_PATH}/assets/cores \
+#    && ../../indexer > .index-xhr
 
 WORKDIR ${ROOT_WWW_PATH}
 
