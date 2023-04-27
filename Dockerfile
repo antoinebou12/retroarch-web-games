@@ -43,7 +43,7 @@ RUN rm -rf ${ROOT_WWW_PATH}/RetroArch.7z
 RUN rm -rf ${ROOT_WWW_PATH}/assets/frontend/assets.zip
 
 # Copy the download_7z_files.sh script to the container
-COPY download_7z_files.sh /tmp/download_7z_files.sh
+COPY InternetArchive.sh /tmp/download_7z_files.sh
 
 # Make the script executable and run it
 RUN chmod +x /tmp/download_7z_files.sh && \
