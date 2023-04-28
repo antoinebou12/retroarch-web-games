@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     vim \
     parallel \
+    git \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
     
