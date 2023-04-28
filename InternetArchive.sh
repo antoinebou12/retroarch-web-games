@@ -1,14 +1,25 @@
 #!/bin/bash
 
-url="https://archive.org/download/nointro.nes-headered"
+download_7z_files() {
+  url="$1"
+  wget -qO- "$url" | \
+    grep -Eo '<td><a href="[^"]+\.7z' | \
+    head -1 | \
+    sed 's/^<td><a href="//' | \
+    while read -r file; do
+      wget -nc --show-progress --quiet "$url/$file"
+    done
+}
 
-# Get the list of .7z files from the URL
-file_list=$(wget -q -O- "${url}" | grep -oE 'href="([^"#]+\.7z)"' | cut -d'"' -f2)
+export -f download_7z_files
 
-# Download each .7z file
-for file in $file_list; do
-    echo "Downloading ${file}..."
-    wget -q --show-progress "${url}/${file}"
-done
+urls=(
+  "https://archive.org/download/nointro.gb"
+  "https://archive.org/download/nointro.gbc"
+  "https://archive.org/download/nointro.gba"
+  "https://archive.org/download/nointro.snes"
+  "https://archive.org/download/nointro.md"
+  "https://archive.org/download/nointro.nes-headered"
+)
 
-echo "All .7z files have been downloaded."
+parallel -j 6 download_7z_files ::: "${urls[@]}"

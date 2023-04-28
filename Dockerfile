@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     nginx \
     wget \
     vim \
+    parallel \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
@@ -49,7 +50,7 @@ COPY InternetArchive.sh /tmp/download_7z_files.sh
 RUN chmod +x /tmp/download_7z_files.sh && \
     /tmp/download_7z_files.sh
 
-COPY index.html ${ROOT_WWW_PATH}/index.html
+# COPY index.html ${ROOT_WWW_PATH}/index.html
 
 RUN ../../indexer > .index-xhr
 
