@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     parallel \
     git \
+    python3 \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
     
