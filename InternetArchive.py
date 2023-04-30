@@ -82,6 +82,7 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
                     future.result()
                 except Exception as e:
                     console.log(Text(f"Error downloading: {str(e)}", style="red"))
+     console.log(Text(f"All .7z files have been downloaded to {output_dir}.", style="bold"))
 
 if __name__ == "__main__":
     app()
