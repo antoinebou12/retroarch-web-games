@@ -53,19 +53,6 @@ RUN pip3 install requests typer rich
 RUN chmod +x /tmp/InternetArchive.py && \
     python3 /tmp/InternetArchive.py
 
-# Stage 2: Final image
-FROM debian:bullseye
-LABEL maintainer="Antoine Boucher <antoine.bou13@gmail.com>"
-
-# Copy assets from builder stage
-COPY --from=builder /var/www/html /var/www/html
-
-# Install required packages
-RUN apt-get update && apt-get install -y \
-    nginx \
-    --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
-
 # Set up the environment for the RetroArch Web Player
 WORKDIR /var/www/html
 # COPY index.html /var/www/html/index.html
