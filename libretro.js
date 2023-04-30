@@ -8,23 +8,21 @@ var afs;
 var initializationCount = 0;
 
 function cleanupStorage() {
-   localStorage.clear();
-   if (BrowserFS.FileSystem.IndexedDB.isAvailable()) {
-      var req = indexedDB.deleteDatabase("RetroArch");
-      req.onsuccess = function () {
-         console.log("Deleted database successfully");
-      };
-      req.onerror = function () {
-         console.log("Couldn't delete database");
-      };
-      req.onblocked = function () {
-         console.log(
-            "Couldn't delete database due to the operation being blocked"
-         );
-      };
-   }
+  localStorage.clear();
+  if (BrowserFS.FileSystem.IndexedDB.isAvailable()) {
+    var req = indexedDB.deleteDatabase("RetroArch");
+    req.onsuccess = function() {
+      console.log("Deleted database successfully");
+    };
+    req.onerror = function() {
+      console.log("Couldn't delete database");
+    };
+    req.onblocked = function() {
+      console.log("Couldn't delete database due to the operation being blocked");
+    };
+  }
 
-   document.getElementById("btnClean").disabled = true;
+  document.getElementById("btnClean").disabled = true;
 }
 
 function idbfsInit() {
@@ -128,12 +126,10 @@ function setupFileSystem(backend) {
  * Retrieve the value of the given GET parameter.
  */
 function getParam(name) {
-   var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-      window.location.href
-   );
-   if (results) {
-      return results[1] || null;
-   }
+  var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (results) {
+    return results[1] || null;
+  }
 }
 
 function startRetroArch() {
