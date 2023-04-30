@@ -49,8 +49,8 @@ COPY InternetArchive.py /tmp/InternetArchive.py
 RUN pip3 install requests typer rich
 
 # Run the InternetArchive script
-RUN chmod +x /tmp/InternetArchive.py && \
-    python3 /tmp/InternetArchive.py
+RUN chmod +x /tmp/InternetArchive.py
+RUN python3 /tmp/InternetArchive.py
 
 # Set up the environment for the RetroArch Web Player
 WORKDIR /var/www/html
