@@ -48,14 +48,12 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
         with open(original_file_path, "wb") as f:
             f.write(response.content)
 
-        console.log(Text(f"Downloaded {filename} to {target_folder}", style="green"))
-
         # Rename the file to a simpler name
         simple_name = simplify_filename(filename)
         renamed_file_path = output_dir / target_folder / simple_name
         original_file_path.rename(renamed_file_path)
 
-        console.log(Text(f"Renamed {filename} to {simple_name}", style="blue"))
+        console.print(Text(f"Renamed {filename} to {simple_name}", style="blue"))
 
     # Update progress
     progress.update(task_id, advance=1)
@@ -93,7 +91,7 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
                     future.result()
                 except Exception as e:
                     console.log(Text(f"Error downloading: {str(e)}", style="red"))
-    console.log(Text(f"All .7z files have been downloaded to {output_dir}.", style="bold"))
+    console.print(Text(f"All .7z files have been downloaded to {output_dir}.", style="bold"))
 
 if __name__ == "__main__":
     app()
