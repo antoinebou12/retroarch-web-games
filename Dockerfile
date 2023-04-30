@@ -29,6 +29,8 @@ RUN git clone https://github.com/emscripten-core/emsdk.git && \
     cd emsdk && \
     ./emsdk install 1.39.5 && \
     ./emsdk activate 1.39.5 && \
+    pwd \
+    ls \
     source emsdk_env.sh
 
 # Create the RetroArch directory and clone the required repositories
