@@ -7,6 +7,7 @@ from rich.text import Text
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import unquote
+import time
 
 app = typer.Typer()
 console = Console()
@@ -31,6 +32,7 @@ def simplify_filename(filename: str) -> str:
     return f"{filename.strip('_')}{file_ext}"
 
 def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, progress: Progress, task_id: int):
+    start_time = time.time()
     response = requests.get(url)
     pattern = re.compile(r'<td><a href="([^"]+\.7z)')
     matches = pattern.findall(response.text)
@@ -59,7 +61,9 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
 
         # Update progress
         games_downloaded += 1
-        progress.update(task_id, description=f"Downloaded {games_downloaded}/{total_games} from {url}")
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        console.print(Text(f"Thread for {core_folder_mapping[url]} completed in {elapsed_time:.2f} seconds", style="green"))
         progress.update(task_id, advance=1)
 
 @app.command()
@@ -98,4 +102,8 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
     console.print(Text(f"All .7z files have been downloaded to {output_dir}.", style="bold"))
 
 if __name__ == "__main__":
+    start_time = time.time()
     app()
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    console.print(Text(f"Elapsed time: {elapsed_time:.2f} seconds", style="bold"))
