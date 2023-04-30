@@ -56,10 +56,6 @@ RUN chmod +x /tmp/InternetArchive.py && \
     python3 /tmp/InternetArchive.py
 
 COPY index.html ${ROOT_WWW_PATH}/index.html
-RUN cd ${ROOT_WWW_PATH}/assets/frontend/bundle && \
-    ../../../indexer > .index-xhr && \
-    cd ${ROOT_WWW_PATH}/assets/cores && \
-    ../../indexer > .index-xhr
 
 # https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
 # https://buildbot.libretro.com/nightly/
