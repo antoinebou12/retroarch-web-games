@@ -51,7 +51,7 @@ RUN rm -rf ${ROOT_WWW_PATH}/assets/frontend/assets.zip
 ENV ROOT_WWW_PATH /var/www/html
 COPY InternetArchive.py /tmp/InternetArchive.py
 RUN chmod +x /tmp/InternetArchive.py && \
-    python /tmp/InternetArchive.py
+    python3 /tmp/InternetArchive.py
 
 COPY index.html ${ROOT_WWW_PATH}/index.html
 RUN chmod +x ${ROOT_WWW_PATH}/indexer && \
