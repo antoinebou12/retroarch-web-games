@@ -65,7 +65,7 @@ RUN apt-get update && apt-get install -y \
 
 # Set up the environment for the RetroArch Web Player
 WORKDIR /var/www/html
-COPY index.html /var/www/html/index.html
+# COPY index.html /var/www/html/index.html
 EXPOSE 80
 COPY entrypoint.sh /
 CMD ["sh", "/entrypoint.sh"]
