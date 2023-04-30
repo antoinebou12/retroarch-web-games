@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y \
 ENV ROOT_WWW_PATH /var/www/html
 RUN cd ${ROOT_WWW_PATH} 
 RUN wget https://buildbot.libretro.com/nightly/emscripten/$(date -d "yesterday" '+%Y-%m-%d')_RetroArch.7z
+RUN ls
 RUN 7z x -y $(date -d "yesterday" '+%Y-%m-%d')_RetroArch.7z
 RUN mv retroarch/* .
 RUN rmdir retroarch 
