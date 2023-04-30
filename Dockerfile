@@ -6,6 +6,7 @@ FROM debian:bullseye
 
 LABEL maintainer "Antoine Boucher <antoine.bou13@gmail.com>"
 
+# Install required packages
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     unzip \
@@ -19,9 +20,10 @@ RUN apt-get update && apt-get install -y \
     parallel \
     git \
     python3 \
+    lbzip2 \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
-    
+
 # Download and install the Emscripten SDK
 RUN git clone https://github.com/emscripten-core/emsdk.git && \
     cd emsdk && \
@@ -62,4 +64,4 @@ WORKDIR ${ROOT_WWW_PATH}
 EXPOSE 80
 COPY entrypoint.sh /
 CMD [ "sh", "/entrypoint.sh"]
-RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores 
+RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores
