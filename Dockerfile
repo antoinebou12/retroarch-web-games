@@ -35,8 +35,8 @@ RUN chmod +x /tmp/setup_retroarch.sh
 RUN bash /tmp/setup_retroarch.sh ${ROOT_WWW_PATH}
 
 # Install Python dependencies for InternetArchive script
-COPY InternetArchive.py /tmp/InternetArchive.py
 RUN pip3 install requests typer rich
+COPY InternetArchive.py /tmp/InternetArchive.py
 
 # Run the InternetArchive script
 RUN chmod +x /tmp/InternetArchive.py
