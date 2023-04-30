@@ -34,6 +34,8 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
     response = requests.get(url)
     pattern = re.compile(r'<td><a href="([^"]+\.7z)')
     matches = pattern.findall(response.text)
+    total_games = len(matches)
+    games_downloaded = 0
 
     for match in matches:
         file_url = f"{url}/{match}"
@@ -55,8 +57,10 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
 
         console.print(Text(f"Renamed {filename} to {simple_name}", style="blue"))
 
-    # Update progress
-    progress.update(task_id, advance=1)
+        # Update progress
+        games_downloaded += 1
+        progress.update(task_id, description=f"Downloaded {games_downloaded}/{total_games} from {url}")
+        progress.update(task_id, advance=1)
 
 @app.command()
 def download(output_dir: str = "/var/www/html/assets/cores"):
