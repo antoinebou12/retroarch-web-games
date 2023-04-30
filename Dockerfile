@@ -47,6 +47,8 @@ RUN cd ${ROOT_WWW_PATH} \
 
 # Set up the environment for the RetroArch Web Player
 WORKDIR ${ROOT_WWW_PATH}
+COPY InternetArchive.sh /tmp/InternetArchive.sh
+RUN chmod +x /tmp/InternetArchive.sh
 COPY InternetArchive.py /tmp/InternetArchive.py
 RUN pip3 install requests
 RUN chmod +x /tmp/InternetArchive.py && \
@@ -56,7 +58,6 @@ RUN chmod +x /tmp/InternetArchive.py && \
 # https://buildbot.libretro.com/nightly/
 
 COPY index.html ${ROOT_WWW_PATH}/index.html
-RUN indexer > .index-xhr
 EXPOSE 80
 COPY entrypoint.sh /
 CMD [ "sh", "/entrypoint.sh"]
