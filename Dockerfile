@@ -35,7 +35,7 @@ RUN 7z x -y $(date -d "yesterday" '+%Y-%m-%d')_RetroArch.7z
 RUN mv retroarch/* .
 RUN rmdir retroarch 
 RUN sed -i '/<script src="analytics.js"><\/script>/d' ./index.html
-RUN mkdir -p ${ROOT_WWW_PATH}/assets/frontend
+RUN mkdir -p ${ROOT_WWW_PATH}/assets/frontend/bundle
 RUN chmod +x indexer
 RUN mkdir -p ${ROOT_WWW_PATH}/assets/cores
 RUN cd ${ROOT_WWW_PATH}/assets/frontend/bundle
