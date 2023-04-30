@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 app = typer.Typer()
 console = Console()
 
-def download_7z_files(url: str, output_dir: Path):
+def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict):
     response = requests.get(url)
     pattern = re.compile(r'<td><a href="([^"]+\.7z)')
     matches = pattern.findall(response.text)
@@ -18,10 +18,13 @@ def download_7z_files(url: str, output_dir: Path):
         filename = file_url.split("/")[-1]
         response = requests.get(file_url)
 
-        with open(output_dir / filename, "wb") as f:
+        target_folder = core_folder_mapping[url]
+        (output_dir / target_folder).mkdir(parents=True, exist_ok=True)
+
+        with open(output_dir / target_folder / filename, "wb") as f:
             f.write(response.content)
 
-        console.log(f"Downloaded {filename}")
+        console.log(f"Downloaded {filename} to {target_folder}")
 
 @app.command()
 def download(output_dir: str = "downloads"):
@@ -34,11 +37,20 @@ def download(output_dir: str = "downloads"):
         "https://archive.org/download/nointro.nes-headered"
     ]
 
+    core_folder_mapping = {
+        urls[0]: "Nintendo - GameBoy",
+        urls[1]: "Nintendo - GameBoy Color",
+        urls[2]: "Nintendo - GameBoy Advance",
+        urls[3]: "Nintendo - Super Nintendo Entertainment System",
+        urls[4]: "Sega - Mega Drive - Genesis",
+        urls[5]: "Nintendo - Nintendo Entertainment System"
+    }
+
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
     with ThreadPoolExecutor(max_workers=6) as executor:
-        futures = {executor.submit(download_7z_files, url, output_path): url for url in urls}
+        futures = {executor.submit(download_7z_files, url, output_path, core_folder_mapping): url for url in urls}
         for future in as_completed(futures):
             try:
                 future.result()
