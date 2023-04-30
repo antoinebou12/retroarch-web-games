@@ -47,10 +47,8 @@ RUN cd ${ROOT_WWW_PATH} \
 
 # Set up the environment for the RetroArch Web Player
 WORKDIR ${ROOT_WWW_PATH}
-COPY InternetArchive.sh /tmp/InternetArchive.sh
-RUN chmod +x /tmp/InternetArchive.sh
 COPY InternetArchive.py /tmp/InternetArchive.py
-RUN pip3 install requests
+RUN pip3 install requests typer rich
 RUN chmod +x /tmp/InternetArchive.py && \
     python3 /tmp/InternetArchive.py
 
