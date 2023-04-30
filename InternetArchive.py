@@ -6,14 +6,18 @@ from rich.progress import Progress
 from rich.text import Text
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from urllib.parse import unquote
 
 app = typer.Typer()
 console = Console()
 
 def simplify_filename(filename: str) -> str:
+    # Decode URL-encoded characters
+    filename = unquote(filename)
+
     # Remove region and version information
     filename = re.sub(r'\(.*?\)', '', filename)
-    
+
     # Replace special characters and spaces with underscores
     filename = re.sub(r'[^a-zA-Z0-9]+', '_', filename)
 
