@@ -55,7 +55,7 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
         renamed_file_path = output_dir / target_folder / simple_name
         original_file_path.rename(renamed_file_path)
 
-        console.print(Text(f"Renamed {filename} to {simple_name}", style="blue"))
+        console.print(Text(f"{simple_name}", style="blue"))
 
         # Update progress
         games_downloaded += 1
