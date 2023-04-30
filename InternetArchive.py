@@ -27,7 +27,7 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict):
         console.log(f"Downloaded {filename} to {target_folder}")
 
 @app.command()
-def download(output_dir: str = "downloads"):
+def download(output_dir: str = "/var/www/html/assets/cores"):
     urls = [
         "https://archive.org/download/nointro.gb",
         "https://archive.org/download/nointro.gbc",
