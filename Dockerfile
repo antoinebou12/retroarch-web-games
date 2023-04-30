@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     parallel \
     git \
     python3 \
+    python3-pip \
     lbzip2 \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
@@ -50,6 +51,7 @@ RUN rm -rf ${ROOT_WWW_PATH}/assets/frontend/assets.zip
 # Set up the environment for the RetroArch Web Player
 ENV ROOT_WWW_PATH /var/www/html
 COPY InternetArchive.py /tmp/InternetArchive.py
+RUN pip3 install requests
 RUN chmod +x /tmp/InternetArchive.py && \
     python3 /tmp/InternetArchive.py
 
