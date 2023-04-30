@@ -21,10 +21,19 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict):
         target_folder = core_folder_mapping[url]
         (output_dir / target_folder).mkdir(parents=True, exist_ok=True)
 
-        with open(output_dir / target_folder / filename, "wb") as f:
+        # Download the file
+        original_file_path = output_dir / target_folder / filename
+        with open(original_file_path, "wb") as f:
             f.write(response.content)
 
         console.log(f"Downloaded {filename} to {target_folder}")
+
+        # Rename the file to a simpler name
+        simple_name = "10-Pin Bowling (USA) (Proto).7z"
+        renamed_file_path = output_dir / target_folder / simple_name
+        original_file_path.rename(renamed_file_path)
+
+        console.log(f"Renamed {filename} to {simple_name}")
 
 @app.command()
 def download(output_dir: str = "/var/www/html/assets/cores"):
