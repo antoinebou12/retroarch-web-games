@@ -35,8 +35,8 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
     pattern = re.compile(r'<td><a href="([^"]+\.7z)')
     matches = pattern.findall(response.text)
 
-    if matches:
-        file_url = f"{url}/{matches[0]}"
+    for match in matches:
+        file_url = f"{url}/{match}"
         filename = file_url.split("/")[-1]
         response = requests.get(file_url)
 
@@ -56,9 +56,9 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
         original_file_path.rename(renamed_file_path)
 
         console.log(Text(f"Renamed {filename} to {simple_name}", style="blue"))
-        
-        # Update progress
-        progress.update(task_id, advance=1)
+
+    # Update progress
+    progress.update(task_id, advance=1)
 
 @app.command()
 def download(output_dir: str = "/var/www/html/assets/cores"):
