@@ -2,13 +2,24 @@ import re
 import requests
 import typer
 from rich.console import Console
+from rich.progress import Progress
+from rich.text import Text
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 app = typer.Typer()
 console = Console()
 
-def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict):
+def simplify_filename(filename: str) -> str:
+    # Remove region and version information
+    filename = re.sub(r'\(.*?\)', '', filename)
+    
+    # Replace special characters and spaces with underscores
+    filename = re.sub(r'[^a-zA-Z0-9]+', '_', filename)
+
+    return filename.strip('_')
+
+def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, progress: Progress, task_id: int):
     response = requests.get(url)
     pattern = re.compile(r'<td><a href="([^"]+\.7z)')
     matches = pattern.findall(response.text)
@@ -26,14 +37,17 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict):
         with open(original_file_path, "wb") as f:
             f.write(response.content)
 
-        console.log(f"Downloaded {filename} to {target_folder}")
+        console.log(Text(f"Downloaded {filename} to {target_folder}", style="green"))
 
         # Rename the file to a simpler name
-        simple_name = "10-Pin Bowling (USA) (Proto).7z"
+        simple_name = simplify_filename(filename)
         renamed_file_path = output_dir / target_folder / simple_name
         original_file_path.rename(renamed_file_path)
 
-        console.log(f"Renamed {filename} to {simple_name}")
+        console.log(Text(f"Renamed {filename} to {simple_name}", style="blue"))
+        
+        # Update progress
+        progress.update(task_id, advance=1)
 
 @app.command()
 def download(output_dir: str = "/var/www/html/assets/cores"):
@@ -59,12 +73,15 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
     output_path.mkdir(parents=True, exist_ok=True)
 
     with ThreadPoolExecutor(max_workers=6) as executor:
-        futures = {executor.submit(download_7z_files, url, output_path, core_folder_mapping): url for url in urls}
-        for future in as_completed(futures):
-            try:
-                future.result()
-            except Exception as e:
-                console.log(f"Error downloading: {str(e)}")
+        with Progress() as progress:
+            task_id = progress.add_task("Download and rename files", total=len(urls))
+
+            futures = {executor.submit(download_7z_files, url, output_path, core_folder_mapping, progress, task_id): url for url in urls}
+            for future in as_completed(futures):
+                try:
+                    future.result()
+                except Exception as e:
+                    console.log(Text(f"Error downloading: {str(e)}", style="red"))
 
 if __name__ == "__main__":
     app()
