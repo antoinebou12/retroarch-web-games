@@ -28,9 +28,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install RetroArch Web Player
+ENV ROOT_WWW_PATH /var/www/html
+WORKDIR /var/www/html
 COPY setup_retroarch.sh /tmp/setup_retroarch.sh
-RUN chmod +x /tmp/setup_retroarch.sh && \
-    /tmp/setup_retroarch.sh ${ROOT_WWW_PATH}
+RUN chmod +x /tmp/setup_retroarch.sh 
+RUN bash /tmp/setup_retroarch.sh ${ROOT_WWW_PATH}
 
 # Install Python dependencies for InternetArchive script
 COPY InternetArchive.py /tmp/InternetArchive.py
