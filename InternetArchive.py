@@ -15,13 +15,20 @@ def simplify_filename(filename: str) -> str:
     # Decode URL-encoded characters
     filename = unquote(filename)
 
+    # Extract the file extension
+    file_ext = ".7z" if filename.endswith(".7z") else ""
+
+    # Remove the file extension before simplifying the filename
+    filename = filename.replace(file_ext, '')
+
     # Remove region and version information
     filename = re.sub(r'\(.*?\)', '', filename)
 
     # Replace special characters and spaces with underscores
     filename = re.sub(r'[^a-zA-Z0-9]+', '_', filename)
 
-    return filename.strip('_')
+    # Re-add the file extension to the simplified filename
+    return f"{filename.strip('_')}{file_ext}"
 
 def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, progress: Progress, task_id: int):
     response = requests.get(url)
