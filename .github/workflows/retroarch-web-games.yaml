@@ -12,9 +12,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        ref: retroarch-web
-
+      
     - name: Setup QEMU and Docker Buildx
       uses: docker/setup-qemu-action@v2
 
