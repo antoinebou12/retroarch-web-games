@@ -12,10 +12,13 @@ This repository provides a self-hosted RetroArch web player with a collection of
 
 ## Image Size
 ### Warning 
-The Docker image size is approximately 30GB due to the inclusion of various games.
+The Docker image size is approximately 10GB due to the inclusion of various games.
 
 How to use this image :
 You can run this image like this:
+
+https://hub.docker.com/repository/docker/antoine13/retroarch-web-games
+
 ```
 docker-compose up -d
 ```
