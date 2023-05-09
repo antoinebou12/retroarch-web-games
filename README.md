@@ -1,4 +1,4 @@
-# Retroarch Web with installed Games
+# Retroarch Web with Installed Games
 This repository provides a self-hosted RetroArch web player with a collection of games for NES, SNES, Genesis, and Gameboy. Run the Docker image to quickly set up and host your own RetroArch web player and enjoy classic games on your browser.
 
 ## Features
