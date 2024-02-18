@@ -93,73 +93,61 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
         console.print(Text(f"Thread for {core_folder_mapping[url]} completed in {elapsed_time:.2f} seconds", style="green"))
         progress.update(task_id, advance=1)
 
-def download_files(url: str, output_dir: Path, core_folder_mapping: dict, progress: Progress, task_id: int, file_ext: str):
-    start_time = time.time()
-    response = requests.get(url)
-    pattern = re.compile(rf'href="([^"]+\{file_ext})"')
-    matches = pattern.findall(response.text)
-    for match in matches:
-        file_url = urljoin(url, match)
-        filename = file_url.split("/")[-1]
-        response = requests.get(file_url)
-        if response.status_code == 200:
-            target_folder = core_folder_mapping[url]
-            (output_dir / target_folder).mkdir(parents=True, exist_ok=True)
-            file_path = output_dir / target_folder / simplify_filename(filename)
-            with open(file_path, "wb") as f:
-                f.write(response.content)
-            console.print(Text(f"{simplify_filename(filename)}", style="blue"))
-        else:
-            console.print(Text(f"Failed to download: {filename}", style="red"))
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    console.print(Text(f"Thread for {core_folder_mapping[url]} completed in {elapsed_time:.2f} seconds", style="green"))
-    progress.update(task_id, advance=1)
-
 @app.command()
 def download(output_dir: str = "/var/www/html/assets/cores"):
-    urls = [
+    urls_7z = [
         "https://archive.org/download/nointro.gb",
         "https://archive.org/download/nointro.gbc",
         "https://archive.org/download/nointro.gba",
         "https://archive.org/download/nointro.snes",
         "https://archive.org/download/nointro.md",
-        "https://archive.org/download/nointro.nes-headered",
+        "https://archive.org/download/nointro.nes-headered"
+    ]
+
+    core_folder_mapping_7z = {
+        urls_7z[0]: "Nintendo - GameBoy",
+        urls_7z[1]: "Nintendo - GameBoy Color",
+        urls_7z[2]: "Nintendo - GameBoy Advance",
+        urls_7z[3]: "Nintendo - Super Nintendo Entertainment System",
+        urls_7z[4]: "Sega - Mega Drive - Genesis",
+        urls_7z[5]: "Nintendo - Nintendo Entertainment System"
+    }
+
+    urls_zip = [
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy/",
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20%28Private%29/",
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance/",
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Color/"
     ]
 
-    core_folder_mapping = {
-        urls[0]: "Nintendo - GameBoy",
-        urls[1]: "Nintendo - GameBoy Color",
-        urls[2]: "Nintendo - GameBoy Advance",
-        urls[3]: "Nintendo - Super Nintendo Entertainment System",
-        urls[4]: "Sega - Mega Drive - Genesis",
-        urls[5]: "Nintendo - Nintendo Entertainment System",
-        urls[6]: "Nintendo - GameBoy",
-        urls[7]: "Nintendo - GameBoy",
-        urls[8]: "Nintendo - GameBoy Advance",
-        urls[9]: "Nintendo - GameBoy Color",
+    core_folder_mapping_zip = {
+        urls_zip[0]: "Nintendo - GameBoy",
+        urls_zip[1]: "Nintendo - GameBoy (Private)",
+        urls_zip[2]: "Nintendo - GameBoy Advance",
+        urls_zip[3]: "Nintendo - GameBoy Color",
     }
 
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    with ThreadPoolExecutor(max_workers=len(urls)) as executor:
+    with ThreadPoolExecutor(max_workers=max(len(urls_7z), len(urls_zip))) as executor:
         with Progress() as progress:
-            task_id = progress.add_task("Download and rename files", total=len(urls))
-            futures = []
-            for url in urls:
-                file_ext = ".zip" if "No-Intro/Nintendo" in url else ".7z"
-                futures.append(executor.submit(download_files, url, output_path, core_folder_mapping, progress, task_id, file_ext))
-            for future in as_completed(futures):
+            task_id_7z = progress.add_task("Download .7z files", total=len(urls_7z))
+            task_id_zip = progress.add_task("Download .zip files", total=len(urls_zip))
+
+            # Schedule .7z downloads
+            futures_7z = {executor.submit(download_7z_files, url, output_path, core_folder_mapping_7z, progress, task_id_7z): url for url in urls_7z}
+            # Schedule .zip downloads
+            futures_zip = {executor.submit(download_zip_files, url, output_path): url for url in urls_zip}
+
+            # Wait for all futures to complete
+            for future in as_completed(futures_7z.union(futures_zip)):
                 try:
                     future.result()
                 except Exception as e:
                     console.log(Text(f"Error downloading: {str(e)}", style="red"))
-    console.print(Text(f"All files have been downloaded to {output_dir}.", style="bold"))
+
+    console.print(Text("All files have been downloaded to the specified directory.", style="bold"))
 
 if __name__ == "__main__":
     start_time = time.time()
