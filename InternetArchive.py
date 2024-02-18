@@ -141,11 +141,11 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
             futures_zip = {executor.submit(download_zip_files, url, output_path): url for url in urls_zip}
 
             # Wait for all futures to complete
-            for future in as_completed(futures_7z.union(futures_zip)):
+            for future in as_completed(list(futures_7z.values()) + list(futures_zip.values())):  # Combine the list of futures
                 try:
                     future.result()
                 except Exception as e:
-                    console.log(Text(f"Error downloading: {str(e)}", style="red"))
+                    console.log(Text(f"Error processing future: {str(e)}", style="red"))
 
     console.print(Text("All files have been downloaded to the specified directory.", style="bold"))
 
