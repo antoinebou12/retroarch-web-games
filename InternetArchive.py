@@ -137,7 +137,7 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
         urls[2]: "Nintendo - GameBoy Advance",
         urls[3]: "Nintendo - Super Nintendo Entertainment System",
         urls[4]: "Sega - Mega Drive - Genesis",
-        urls[5]: "Nintendo - Nintendo Entertainment System"
+        urls[5]: "Nintendo - Nintendo Entertainment System",
         urls[6]: "Nintendo - GameBoy",
         urls[7]: "Nintendo - GameBoy",
         urls[8]: "Nintendo - GameBoy Advance",
