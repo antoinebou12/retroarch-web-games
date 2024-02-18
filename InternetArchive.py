@@ -40,7 +40,7 @@ def download_zip_files(url: str, output_dir: Path):
 
         for match in matches:
             # Ensure the URL is absolute
-            file_url = urljoin(url, match)
+            file_url = url + match if match.startswith("/") else match if match.startswith("http") else f"{url}/{match}" # If the URL is not absolute, append the base URL
             filename = file_url.split("/")[-1]
             simple_name = simplify_filename(filename)
 
@@ -94,7 +94,7 @@ def download_7z_files(url: str, output_dir: Path, core_folder_mapping: dict, pro
         progress.update(task_id, advance=1)
 
 @app.command()
-def download(output_dir: str = "/var/www/html/assets/cores"):
+def download(output_dir: str = "./downloads"):
     urls_7z = [
         "https://archive.org/download/nointro.gb",
         "https://archive.org/download/nointro.gbc",
@@ -118,6 +118,8 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20%28Private%29/",
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance/",
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Color/"
+        "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/",
+        "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/"
     ]
 
     core_folder_mapping_zip = {
@@ -125,6 +127,8 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
         urls_zip[1]: "Nintendo - GameBoy (Private)",
         urls_zip[2]: "Nintendo - GameBoy Advance",
         urls_zip[3]: "Nintendo - GameBoy Color",
+        urls_zip[4]: "Nintendo - Super Nintendo Entertainment System",
+        urls_zip[5]: "Nintendo - Nintendo Entertainment System"
     }
 
     output_path = Path(output_dir)
@@ -136,9 +140,10 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
             task_id_zip = progress.add_task("Download .zip files", total=len(urls_zip))
 
             # Schedule .7z downloads
-            futures_7z = {executor.submit(download_7z_files, url, output_path, core_folder_mapping_7z, progress, task_id_7z): url for url in urls_7z}
+            futures_7z = {url: executor.submit(download_7z_files, url, output_path, core_folder_mapping_7z, progress, task_id_7z) for url in urls_7z}
+
             # Schedule .zip downloads
-            futures_zip = {executor.submit(download_zip_files, url, output_path): url for url in urls_zip}
+            futures_zip = {url: executor.submit(download_zip_files, url, output_path) for url in urls_zip}
 
             # Wait for all futures to complete
             for future in as_completed(list(futures_7z.values()) + list(futures_zip.values())):  # Combine the list of futures
@@ -146,7 +151,6 @@ def download(output_dir: str = "/var/www/html/assets/cores"):
                     future.result()
                 except Exception as e:
                     console.log(Text(f"Error processing future: {str(e)}", style="red"))
-
     console.print(Text("All files have been downloaded to the specified directory.", style="bold"))
 
 if __name__ == "__main__":
