@@ -4,7 +4,7 @@
 #
 
 # Stage 1: Builder
-FROM debian:bullseye AS builder
+FROM debian:bookworm AS builder
 
 LABEL maintainer="Antoine Boucher <antoine.bou13@gmail.com>"
 
