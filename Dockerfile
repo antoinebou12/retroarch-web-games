@@ -43,11 +43,11 @@ RUN chmod +x /tmp/InternetArchive.py
 RUN python3 /tmp/InternetArchive.py
 
 # Sort
-RUN bash sort_mkdir.sh ./downloads/Nintendo\ -\ GameBoy\ Advance/
-RUN bash sort_mkdir.sh ./downloads/Nintendo\ -\ Game\ Boy\ Color/
-RUN bash sort_mkdir.sh ./downloads/Nintendo\ -\ Nintendo\ 64/
-RUN bash sort_mkdir.sh ./downloads/Nintendo\ -\ Nintendo\ Entertainment\ System/
-RUN bash sort_mkdir.sh ./downloads/Nintendo\ -\ Super\ Nintendo\ Entertainment\ System/
+RUN bash sort_mkdir.sh ${ROOT_WWW_PATH}/downloads/Nintendo\ -\ GameBoy\ Advance/
+RUN bash sort_mkdir.sh ${ROOT_WWW_PATH}/downloads/Nintendo\ -\ Game\ Boy\ Color/
+RUN bash sort_mkdir.sh ${ROOT_WWW_PATH}/downloads/Nintendo\ -\ Nintendo\ 64/
+RUN bash sort_mkdir.sh ${ROOT_WWW_PATH}/downloads/Nintendo\ -\ Nintendo\ Entertainment\ System/
+RUN bash sort_mkdir.sh ${ROOT_WWW_PATH}/downloads/Nintendo\ -\ Super\ Nintendo\ Entertainment\ System/
 
 
 # Set up the environment for the RetroArch Web Player
