@@ -22,67 +22,6 @@ def simplify_filename(filename: str) -> str:
     return f"{filename.strip('_')}{file_ext}"
 
 
-def download_zip_files(
-    url: str,
-    output_dir: Path,
-    core_folder_mapping: dict,
-    progress: Progress,
-    task_id: int,
-):
-    start_time = time.time()
-    try:
-        response = requests.get(url)
-    except requests.exceptions.ConnectionError:
-        console.print(
-            Text(
-                f"An error occurred while trying to connect to {url}. Please check your internet connection.",
-                style="red",
-            )
-        )
-        return
-    except requests.exceptions.RequestException as e:
-        console.print(
-            Text(
-                f"An error occurred while trying to connect to {url}: {str(e)}",
-                style="red",
-            )
-        )
-        return
-    pattern = re.compile(r'<td><a href="([^"]+\.zip)')
-    matches = pattern.findall(response.text)
-    total_games = len(matches)
-
-    for match in matches:
-        file_url = f"{url}/{match}"
-        filename = file_url.split("/")[-1]
-        response = requests.get(file_url)
-
-        target_folder = core_folder_mapping[url]
-        (output_dir / target_folder).mkdir(parents=True, exist_ok=True)
-
-        # Download the file
-        original_file_path = output_dir / target_folder / filename
-        with open(original_file_path, "wb") as f:
-            f.write(response.content)
-
-        # Rename the file to a simpler name
-        simple_name = simplify_filename(filename)
-        renamed_file_path = output_dir / target_folder / simple_name
-        original_file_path.rename(renamed_file_path)
-
-        console.print(Text(f"{simple_name}", style="blue"))
-
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        console.print(
-            Text(
-                f"Thread for {core_folder_mapping[url]} completed in {elapsed_time:.2f} seconds for {total_games} games",
-                style="green",
-            )
-        )
-        progress.update(task_id, advance=1)
-
-
 def download_file(
     file_url: str,
     output_dir: Path,
@@ -100,7 +39,7 @@ def download_file(
         progress.update(task_id, advance=1)
     except requests.RequestException as e:
         console.print(Text(f"Failed to download {file_url}: {e}", style="red"))
-
+        progress.update(task_id, advance=1)
 
 
 def download_files(
@@ -208,6 +147,7 @@ def download(output_dir: str = "./downloads"):
                     progress,
                     task_id_zip,
                 )
+
 
 if __name__ == "__main__":
     start_time = time.time()
